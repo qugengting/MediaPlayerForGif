@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <FrameLayout
+        android:id="@+id/playerContainer"
+        android:layout_width="match_parent"
+        android:layout_height="250dp">
+
+        <SurfaceView
+            android:id="@+id/mPlayerView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:onClick="onClick" />
+    </FrameLayout>
+
+    <SeekBar
+        android:id="@+id/seekbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:max="100"
+        android:progress="0" />
+
+    <TextView
+        android:id="@+id/tv_duration"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="16dp"
+        android:textColor="#ff0000"
+        android:textSize="14sp" />
+
+    <Button
+        android:id="@+id/mPlay"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:onClick="onClick"
+        android:text="视频选择"
+        android:textSize="16sp" />
+
+    <Button
+        android:id="@+id/mType"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:onClick="onClick"
+        android:text="展示方式切换"
+        android:textSize="16sp" />
+
+    <Button
+        android:id="@+id/gotovideoview"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:onClick="onClick"
+        android:text="VideoView方式播放"
+        android:textSize="16sp" />
+
+    <Button
+        android:id="@+id/gotoTextureActivity"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:onClick="onClick"
+        android:text="TextureView方式播放"
+        android:textSize="16sp" />
+
+</LinearLayout>
