@@ -1,1 +1,1 @@
-include ':app', ':gifencoder'
+include ':app', ':gifbuilder-lib'

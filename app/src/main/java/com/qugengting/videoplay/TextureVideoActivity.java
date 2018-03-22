@@ -6,6 +6,7 @@ import android.graphics.SurfaceTexture;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.text.TextUtils;
@@ -20,7 +21,7 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.glgjing.gifencoder.GIFEncoderWithSingleFrame;
+import com.qugengting.image.encoder.GIFEncoderWithSingleFrame;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -72,6 +73,7 @@ public class TextureVideoActivity extends BaseActivity implements NumberPicker.O
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+//        mUrl = Environment.getExternalStorageDirectory() + File.separator + "jFr8XpNg.mp4";
         setContentView(R.layout.activity_texture_video);
         btnScreenShots = (Button) findViewById(R.id.btn_screenshots);
         btnStartPlay = (Button) findViewById(R.id.btn_start);
@@ -241,6 +243,7 @@ public class TextureVideoActivity extends BaseActivity implements NumberPicker.O
         switch (id) {
             case R.id.btn_screenshots:
                 bitmaps.clear();
+                bitmapPaths.clear();
                 Toast.makeText(this, "开始截图", Toast.LENGTH_SHORT).show();
                 if (handler == null) {
                     handler = new MyHandler();
@@ -308,6 +311,7 @@ public class TextureVideoActivity extends BaseActivity implements NumberPicker.O
     private static final int DURUATION = 1000;
     private int count = 0;
     List<Bitmap> bitmaps = new ArrayList<>();
+    List<String> bitmapPaths = new ArrayList<>();
     private MyHandler handler;
 
     @Override
@@ -340,38 +344,14 @@ public class TextureVideoActivity extends BaseActivity implements NumberPicker.O
                 }
                 Bitmap bitmap = getBitmap();
                 String path = getExternalCacheDir() + File.separator + String.valueOf(count + 1) + ".jpg";
+                bitmapPaths.add(path);
                 BitmapSizeUtils.compressSize(bitmap, path, compressSize, 80);
-                Bitmap bmp = BitmapFactory.decodeFile(path);
+                BitmapFactory.Options options = new BitmapFactory.Options();
+                options.inPreferredConfig = Bitmap.Config.RGB_565;
+                //转化为RGB_565，使用bitmap.copy(Bitmap.Config.RGB_565, false)无效
+                Bitmap bmp = BitmapFactory.decodeFile(path, options);
                 //压缩后再添加
                 bitmaps.add(bmp);
-//                File file = new File(path);
-//                FileOutputStream fos = null;
-//                try {
-//                    fos = new FileOutputStream(file);
-//                    //压缩比例设置高一些，以免gif图片过大
-//                    bitmap.compress(Bitmap.CompressFormat.JPEG, 20, fos);
-//                    Log.e(TAG, "生成图片成功");
-//                    File f = new File(path);
-//                    boolean b = file.exists();
-//                    Log.e(TAG, "图片是否存在：" + b + ", 路径是：" + f);
-//                    fos.flush();
-//                    fos.close();
-//                    Bitmap bmp = BitmapFactory.decodeFile(path);
-//                    //压缩后再添加
-//                    bitmaps.add(bmp);
-//                } catch (FileNotFoundException e) {
-//                    e.printStackTrace();
-//                } catch (IOException e) {
-//                    e.printStackTrace();
-//                } finally {
-//                    if (fos != null) {
-//                        try {
-//                            fos.close();
-//                        } catch (IOException e) {
-//                            e.printStackTrace();
-//                        }
-//                    }
-//                }
                 count++;
                 sendEmptyMessageDelayed(WHAT_SCREENSHOTS, frameRate);
             } else if (what == WHAT_PLAY) {
@@ -431,7 +411,7 @@ public class TextureVideoActivity extends BaseActivity implements NumberPicker.O
                     @Override
                     public void run() {
                         GIFEncoderWithSingleFrame encoder = new GIFEncoderWithSingleFrame();
-                        encoder.setFrameRate(1000 / frameRate / 1.5f);
+                        encoder.setFrameRate(1000 / frameRate / 1.4f);
                         Log.e(TAG, "总共" + bitmaps.size() + "帧，正在添加第" + (n + 1) + "帧");
                         if (n == 0) {
                             encoder.addFirstFrame(fileName, bitmaps.get(n));
@@ -491,6 +471,14 @@ public class TextureVideoActivity extends BaseActivity implements NumberPicker.O
                         f.delete();
                     }
                 }
+                fileParts.clear();
+                for (String bitmapPath : bitmapPaths) {
+                    File f = new File(bitmapPath);
+                    if (f.exists()) {
+                        f.delete();
+                    }
+                }
+                bitmapPaths.clear();
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
             } catch (IOException e) {
@@ -567,10 +555,10 @@ public class TextureVideoActivity extends BaseActivity implements NumberPicker.O
     @Override
     protected void onResume() {
         super.onResume();
-        if (handler != null) {
-            handler.sendEmptyMessage(WHAT_PLAY);
-            mMediaPlayer.start();
-        }
+//        if (handler != null) {
+//            handler.sendEmptyMessage(WHAT_PLAY);
+//            mMediaPlayer.start();
+//        }
     }
 
     @Override

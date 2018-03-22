@@ -1,0 +1,3 @@
+H:/MediaPlayerForGif/gifbuilder-lib/.externalNativeBuild/cmake/debug/arm64-v8a/CMakeFiles/image-lib.dir
+H:/MediaPlayerForGif/gifbuilder-lib/.externalNativeBuild/cmake/debug/arm64-v8a/CMakeFiles/edit_cache.dir
+H:/MediaPlayerForGif/gifbuilder-lib/.externalNativeBuild/cmake/debug/arm64-v8a/CMakeFiles/rebuild_cache.dir
