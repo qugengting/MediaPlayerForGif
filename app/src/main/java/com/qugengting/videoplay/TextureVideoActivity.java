@@ -1,8 +1,10 @@
 package com.qugengting.videoplay;
 
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.SurfaceTexture;
+import android.media.MediaMetadataRetriever;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
@@ -10,10 +12,13 @@ import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.text.TextUtils;
+import android.util.DisplayMetrics;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.Surface;
 import android.view.TextureView;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.NumberPicker;
@@ -135,14 +140,53 @@ public class TextureVideoActivity extends BaseActivity implements NumberPicker.O
             }
         });
 
-
     }
 
     public Bitmap getBitmap() {
         return mPreview.getBitmap();
     }
 
+    /**
+     * dp转换px
+     */
+    public int dip2px(Context context, float dipValue) {
+        return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dipValue, context.getResources()
+                .getDisplayMetrics());
+    }
+
+    private float videoWidth;
+    private float videoHeight;
+    private int videoRotation;
+
+    private void initVideoSize() {
+        MediaMetadataRetriever mmr = new MediaMetadataRetriever();
+        try {
+            mmr.setDataSource(mUrl);
+            String width = mmr.extractMetadata(MediaMetadataRetriever.METADATA_KEY_VIDEO_WIDTH);
+            String height = mmr.extractMetadata(MediaMetadataRetriever.METADATA_KEY_VIDEO_HEIGHT);
+            String rotation = mmr.extractMetadata(MediaMetadataRetriever.METADATA_KEY_VIDEO_ROTATION);
+            videoWidth = Float.valueOf(width);
+            videoHeight = Float.valueOf(height);
+            videoRotation = Integer.valueOf(rotation);
+            int w1;
+            if (videoRotation == 90) {
+                w1 = (int) ((videoHeight / videoWidth) * dip2px(TextureVideoActivity.this, 250));
+            } else {
+                w1 = (int) (videoWidth / videoHeight * dip2px(TextureVideoActivity.this, 250));
+            }
+            LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) mPreview.getLayoutParams();
+            layoutParams.width = w1;
+            layoutParams.height = mPreview.getHeight();
+            mPreview.setLayoutParams(layoutParams);
+        } catch (Exception ex) {
+            Log.e(TAG, "MediaMetadataRetriever exception " + ex);
+        } finally {
+            mmr.release();
+        }
+    }
+
     private void startPlay() {
+        initVideoSize();
         try {
             if (mMediaPlayer == null) {
                 mMediaPlayer = new MediaPlayer();
@@ -224,7 +268,6 @@ public class TextureVideoActivity extends BaseActivity implements NumberPicker.O
 
     @Override
     public void onSurfaceTextureSizeChanged(SurfaceTexture surfaceTexture, int width, int height) {
-
     }
 
     @Override
