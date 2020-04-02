@@ -1,0 +1,38 @@
+
+{
+	"buildFiles" : [ "H:/MediaPlayerForGif/gifbuilder-lib/CMakeLists.txt" ],
+	"cleanCommands" : 
+	[
+		"F:\\Android\\sdk\\cmake\\3.6.4111459\\bin\\cmake.exe --build H:\\MediaPlayerForGif\\gifbuilder-lib\\.cxx\\cmake\\debug\\x86 --target clean"
+	],
+	"cppFileExtensions" : [ "cpp" ],
+	"libraries" : 
+	{
+		"image-lib-Debug-x86" : 
+		{
+			"abi" : "x86",
+			"artifactName" : "image-lib",
+			"buildCommand" : "F:\\Android\\sdk\\cmake\\3.6.4111459\\bin\\cmake.exe --build H:\\MediaPlayerForGif\\gifbuilder-lib\\.cxx\\cmake\\debug\\x86 --target image-lib",
+			"buildType" : "debug",
+			"files" : 
+			[
+				
+				{
+					"flags" : "  --target=i686-none-linux-android --gcc-toolchain=F:/Android/sdk/ndk-bundle/toolchains/x86-4.9/prebuilt/windows-x86_64 --sysroot=F:/Android/sdk/ndk-bundle/sysroot  -Dimage_lib_EXPORTS -isystem F:\\Android\\sdk\\ndk-bundle\\sources\\cxx-stl\\gnu-libstdc++\\4.9\\include -isystem F:\\Android\\sdk\\ndk-bundle\\sources\\cxx-stl\\gnu-libstdc++\\4.9\\libs\\x86\\include -isystem F:\\Android\\sdk\\ndk-bundle\\sources\\cxx-stl\\gnu-libstdc++\\4.9\\include\\backward  -isystem F:/Android/sdk/ndk-bundle/sysroot/usr/include/i686-linux-android -D__ANDROID_API__=21 -g -DANDROID -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -mstackrealign -Wa,--noexecstack -Wformat -Werror=format-security   -O0 -fno-limit-debug-info  -fPIC    -c ",
+					"src" : "H:/MediaPlayerForGif/gifbuilder-lib/src/main/cpp/native-lib.cpp",
+					"workingDirectory" : "H:/MediaPlayerForGif/gifbuilder-lib/.cxx/cmake/debug/x86"
+				}
+			],
+			"output" : "H:/MediaPlayerForGif/gifbuilder-lib/build/intermediates/cmake/debug/obj/x86/libimage-lib.so",
+			"toolchain" : "2142903221"
+		}
+	},
+	"toolchains" : 
+	{
+		"2142903221" : 
+		{
+			"cCompilerExecutable" : "F:/Android/sdk/ndk-bundle/toolchains/llvm/prebuilt/windows-x86_64/bin/clang.exe",
+			"cppCompilerExecutable" : "F:/Android/sdk/ndk-bundle/toolchains/llvm/prebuilt/windows-x86_64/bin/clang++.exe"
+		}
+	}
+}

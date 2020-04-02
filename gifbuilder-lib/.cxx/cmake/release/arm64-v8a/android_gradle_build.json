@@ -1,0 +1,38 @@
+
+{
+	"buildFiles" : [ "H:/MediaPlayerForGif/gifbuilder-lib/CMakeLists.txt" ],
+	"cleanCommands" : 
+	[
+		"F:\\Android\\sdk\\cmake\\3.6.4111459\\bin\\cmake.exe --build H:\\MediaPlayerForGif\\gifbuilder-lib\\.cxx\\cmake\\release\\arm64-v8a --target clean"
+	],
+	"cppFileExtensions" : [ "cpp" ],
+	"libraries" : 
+	{
+		"image-lib-Release-arm64-v8a" : 
+		{
+			"abi" : "arm64-v8a",
+			"artifactName" : "image-lib",
+			"buildCommand" : "F:\\Android\\sdk\\cmake\\3.6.4111459\\bin\\cmake.exe --build H:\\MediaPlayerForGif\\gifbuilder-lib\\.cxx\\cmake\\release\\arm64-v8a --target image-lib",
+			"buildType" : "release",
+			"files" : 
+			[
+				
+				{
+					"flags" : "  --target=aarch64-none-linux-android --gcc-toolchain=F:/Android/sdk/ndk-bundle/toolchains/aarch64-linux-android-4.9/prebuilt/windows-x86_64 --sysroot=F:/Android/sdk/ndk-bundle/sysroot  -Dimage_lib_EXPORTS -isystem F:\\Android\\sdk\\ndk-bundle\\sources\\cxx-stl\\gnu-libstdc++\\4.9\\include -isystem F:\\Android\\sdk\\ndk-bundle\\sources\\cxx-stl\\gnu-libstdc++\\4.9\\libs\\arm64-v8a\\include -isystem F:\\Android\\sdk\\ndk-bundle\\sources\\cxx-stl\\gnu-libstdc++\\4.9\\include\\backward  -isystem F:/Android/sdk/ndk-bundle/sysroot/usr/include/aarch64-linux-android -D__ANDROID_API__=21 -g -DANDROID -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -Wa,--noexecstack -Wformat -Werror=format-security   -O2 -DNDEBUG  -fPIC    -c ",
+					"src" : "H:/MediaPlayerForGif/gifbuilder-lib/src/main/cpp/native-lib.cpp",
+					"workingDirectory" : "H:/MediaPlayerForGif/gifbuilder-lib/.cxx/cmake/release/arm64-v8a"
+				}
+			],
+			"output" : "H:/MediaPlayerForGif/gifbuilder-lib/build/intermediates/cmake/release/obj/arm64-v8a/libimage-lib.so",
+			"toolchain" : "2142903221"
+		}
+	},
+	"toolchains" : 
+	{
+		"2142903221" : 
+		{
+			"cCompilerExecutable" : "F:/Android/sdk/ndk-bundle/toolchains/llvm/prebuilt/windows-x86_64/bin/clang.exe",
+			"cppCompilerExecutable" : "F:/Android/sdk/ndk-bundle/toolchains/llvm/prebuilt/windows-x86_64/bin/clang++.exe"
+		}
+	}
+}

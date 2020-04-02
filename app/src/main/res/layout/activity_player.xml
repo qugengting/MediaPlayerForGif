@@ -67,4 +67,13 @@
         android:textAllCaps="false"
         android:textSize="16sp" />
 
+    <Button
+        android:id="@+id/gotoTestActivity"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:onClick="onClick"
+        android:text="go to TestActivity"
+        android:textAllCaps="false"
+        android:textSize="16sp" />
+
 </LinearLayout>

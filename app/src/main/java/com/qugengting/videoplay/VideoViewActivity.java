@@ -14,7 +14,7 @@ public class VideoViewActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_videoview);
-        videoView = (VideoView) findViewById(R.id.videoview);
+        videoView = findViewById(R.id.videoview);
         mediaController = new MediaController(this);
     }
 

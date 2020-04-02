@@ -7,7 +7,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
+import java.io.FileDescriptor;
 import java.io.IOException;
+import java.util.logging.Handler;
 
 public class MPlayer implements IMPlayer, MediaPlayer.OnBufferingUpdateListener,
         MediaPlayer.OnCompletionListener, MediaPlayer.OnVideoSizeChangedListener,
@@ -17,7 +19,7 @@ public class MPlayer implements IMPlayer, MediaPlayer.OnBufferingUpdateListener,
     private MediaPlayer player;
 
 
-    private String source;
+    private FileDescriptor source;
     private IMDisplay display;
 
     private boolean isVideoSizeMeasured = false;  //视频宽高是否已获取，且不为0
@@ -64,7 +66,7 @@ public class MPlayer implements IMPlayer, MediaPlayer.OnBufferingUpdateListener,
     }
 
     private boolean checkPlay() {
-        if (source == null || source.length() == 0) {
+        if (source == null) {
             return false;
         }
         return true;
@@ -135,20 +137,21 @@ public class MPlayer implements IMPlayer, MediaPlayer.OnBufferingUpdateListener,
     }
 
     @Override
-    public void setSource(String url) throws MPlayerException {
-        this.source = url;
+    public void setSource(FileDescriptor fileDescriptor) {
+        this.source = fileDescriptor;
         createPlayerIfNeed();
         isMediaPrepared = false;
         isVideoSizeMeasured = false;
         currentVideoWidth = 0;
         currentVideoHeight = 0;
         player.reset();
+
         try {
-            player.setDataSource(url);
+            player.setDataSource(fileDescriptor);
             player.prepareAsync();
             log("异步准备视频");
         } catch (IOException e) {
-            throw new MPlayerException("set source error", e);
+            e.printStackTrace();
         }
     }
 

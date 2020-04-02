@@ -2,9 +2,9 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/MediaPlayerForGif.iml" filepath="$PROJECT_DIR$/MediaPlayerForGif.iml" />
-      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/gifbuilder-lib/gifbuilder-lib.iml" filepath="$PROJECT_DIR$/gifbuilder-lib/gifbuilder-lib.iml" />
+      <module fileurl="file://$PROJECT_DIR$/MediaPlayerForGif.iml" filepath="$PROJECT_DIR$/MediaPlayerForGif.iml" group="MediaPlayerForGif" />
+      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" group="MediaPlayerForGif/app" />
+      <module fileurl="file://$PROJECT_DIR$/gifbuilder-lib/gifbuilder-lib.iml" filepath="$PROJECT_DIR$/gifbuilder-lib/gifbuilder-lib.iml" group="MediaPlayerForGif/gifbuilder-lib" />
     </modules>
   </component>
 </project>

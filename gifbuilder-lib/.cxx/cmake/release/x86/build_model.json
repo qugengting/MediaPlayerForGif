@@ -1,0 +1,75 @@
+{
+  "variant": {
+    "module": {
+      "rootBuildGradleFolder": "H:\\MediaPlayerForGif",
+      "sdkFolder": "F:\\Android\\sdk",
+      "isNativeCompilerSettingsCacheEnabled": false,
+      "isBuildOnlyTargetAbiEnabled": true,
+      "splitsAbiFilterSet": [],
+      "intermediatesFolder": "H:\\MediaPlayerForGif\\gifbuilder-lib\\build\\intermediates",
+      "gradleModulePathName": ":gifbuilder-lib",
+      "moduleRootFolder": "H:\\MediaPlayerForGif\\gifbuilder-lib",
+      "makeFile": "H:\\MediaPlayerForGif\\gifbuilder-lib\\CMakeLists.txt",
+      "buildSystem": "CMAKE",
+      "compilerSettingsCacheFolder": "H:\\MediaPlayerForGif\\.cxx",
+      "cxxFolder": "H:\\MediaPlayerForGif\\gifbuilder-lib\\.cxx",
+      "ndkFolder": "F:\\Android\\sdk\\ndk-bundle",
+      "ndkVersion": "16.1.4479499",
+      "ndkSupportedAbiList": [
+        "ARMEABI",
+        "ARMEABI_V7A",
+        "ARM64_V8A",
+        "MIPS",
+        "MIPS64",
+        "X86",
+        "X86_64"
+      ],
+      "ndkDefaultAbiList": [
+        "ARMEABI_V7A",
+        "ARM64_V8A",
+        "X86",
+        "X86_64"
+      ],
+      "cmakeToolchainFile": "."
+    },
+    "buildSystemArgumentList": [],
+    "cFlagList": [],
+    "cppFlagsList": [
+      ""
+    ],
+    "variantName": "release",
+    "soFolder": "H:\\MediaPlayerForGif\\gifbuilder-lib\\build\\intermediates\\cmake\\release\\lib",
+    "objFolder": "H:\\MediaPlayerForGif\\gifbuilder-lib\\build\\intermediates\\cmake\\release\\obj",
+    "jsonFolder": "H:\\MediaPlayerForGif\\gifbuilder-lib\\.cxx\\cmake\\release",
+    "gradleBuildOutputFolder": "H:\\MediaPlayerForGif\\gifbuilder-lib\\.cxx\\cxx\\release",
+    "isDebuggableEnabled": false,
+    "validAbiList": [
+      "ARMEABI_V7A",
+      "ARM64_V8A",
+      "X86",
+      "X86_64"
+    ],
+    "buildTargetSet": []
+  },
+  "abi": "X86",
+  "abiPlatformVersion": 21,
+  "cxxBuildFolder": "H:\\MediaPlayerForGif\\gifbuilder-lib\\.cxx\\cmake\\release\\x86",
+  "jsonFile": "H:\\MediaPlayerForGif\\gifbuilder-lib\\.cxx\\cmake\\release\\x86\\android_gradle_build.json",
+  "gradleBuildOutputFolder": "H:\\MediaPlayerForGif\\gifbuilder-lib\\.cxx\\cxx\\release\\x86",
+  "objFolder": "H:\\MediaPlayerForGif\\gifbuilder-lib\\build\\intermediates\\cmake\\release\\obj\\x86",
+  "buildCommandFile": "H:\\MediaPlayerForGif\\gifbuilder-lib\\.cxx\\cmake\\release\\x86\\build_command.txt",
+  "buildOutputFile": "H:\\MediaPlayerForGif\\gifbuilder-lib\\.cxx\\cmake\\release\\x86\\build_output.txt",
+  "modelOutputFile": "H:\\MediaPlayerForGif\\gifbuilder-lib\\.cxx\\cmake\\release\\x86\\build_model.json",
+  "cmake": {
+    "cmakeListsWrapperFile": "H:\\MediaPlayerForGif\\gifbuilder-lib\\.cxx\\cxx\\release\\x86\\CMakeLists.txt",
+    "toolchainWrapperFile": "H:\\MediaPlayerForGif\\gifbuilder-lib\\.cxx\\cxx\\release\\x86\\android_gradle_build.toolchain.cmake",
+    "buildGenerationStateFile": "H:\\MediaPlayerForGif\\gifbuilder-lib\\.cxx\\cxx\\release\\x86\\build_generation_state.json",
+    "cacheKeyFile": "H:\\MediaPlayerForGif\\gifbuilder-lib\\.cxx\\cxx\\release\\x86\\compiler_cache_key.json",
+    "compilerCacheUseFile": "H:\\MediaPlayerForGif\\gifbuilder-lib\\.cxx\\cxx\\release\\x86\\compiler_cache_use.json",
+    "compilerCacheWriteFile": "H:\\MediaPlayerForGif\\gifbuilder-lib\\.cxx\\cxx\\release\\x86\\compiler_cache_write.json",
+    "toolchainSettingsFromCacheFile": "H:\\MediaPlayerForGif\\gifbuilder-lib\\.cxx\\cxx\\release\\x86\\compiler_settings_cache.cmake",
+    "cmakeWrappingBaseFolder": "."
+  },
+  "jsonGenerationLoggingRecordFile": "H:\\MediaPlayerForGif\\gifbuilder-lib\\.cxx\\cmake\\release\\x86\\json_generation_record.json",
+  "compileCommandsJsonFile": "H:\\MediaPlayerForGif\\gifbuilder-lib\\.cxx\\cmake\\release\\x86\\compile_commands.json"
+}

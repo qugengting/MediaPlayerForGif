@@ -6,19 +6,15 @@ import android.graphics.BitmapFactory;
 import android.graphics.SurfaceTexture;
 import android.media.MediaMetadataRetriever;
 import android.media.MediaPlayer;
-import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.text.TextUtils;
-import android.util.DisplayMetrics;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.Surface;
 import android.view.TextureView;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.NumberPicker;
@@ -78,7 +74,6 @@ public class TextureVideoActivity extends BaseActivity implements NumberPicker.O
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        mUrl = Environment.getExternalStorageDirectory() + File.separator + "jFr8XpNg.mp4";
         setContentView(R.layout.activity_texture_video);
         btnScreenShots = (Button) findViewById(R.id.btn_screenshots);
         btnStartPlay = (Button) findViewById(R.id.btn_start);
@@ -161,7 +156,7 @@ public class TextureVideoActivity extends BaseActivity implements NumberPicker.O
     private void initVideoSize() {
         MediaMetadataRetriever mmr = new MediaMetadataRetriever();
         try {
-            mmr.setDataSource(mUrl);
+            mmr.setDataSource(mFileDescriptor);
             String width = mmr.extractMetadata(MediaMetadataRetriever.METADATA_KEY_VIDEO_WIDTH);
             String height = mmr.extractMetadata(MediaMetadataRetriever.METADATA_KEY_VIDEO_HEIGHT);
             String rotation = mmr.extractMetadata(MediaMetadataRetriever.METADATA_KEY_VIDEO_ROTATION);
@@ -179,7 +174,7 @@ public class TextureVideoActivity extends BaseActivity implements NumberPicker.O
             layoutParams.height = mPreview.getHeight();
             mPreview.setLayoutParams(layoutParams);
         } catch (Exception ex) {
-            Log.e(TAG, "MediaMetadataRetriever exception " + ex);
+            ex.printStackTrace();
         } finally {
             mmr.release();
         }
@@ -196,7 +191,7 @@ public class TextureVideoActivity extends BaseActivity implements NumberPicker.O
             if (isLoad) {
                 mMediaPlayer.stop();
                 mMediaPlayer.reset();
-                mMediaPlayer.setDataSource(this, Uri.parse(mUrl));
+                mMediaPlayer.setDataSource(mFileDescriptor);
                 mMediaPlayer.setSurface(surface);
                 mMediaPlayer.setLooping(false);
                 mMediaPlayer.prepareAsync();
@@ -220,7 +215,7 @@ public class TextureVideoActivity extends BaseActivity implements NumberPicker.O
                     }
                 });
             } else {
-                mMediaPlayer.setDataSource(this, Uri.parse(mUrl));
+                mMediaPlayer.setDataSource(mFileDescriptor);
                 mMediaPlayer.setSurface(surface);
                 mMediaPlayer.setLooping(false);
 
@@ -260,6 +255,7 @@ public class TextureVideoActivity extends BaseActivity implements NumberPicker.O
 
     @Override
     public void onSurfaceTextureAvailable(SurfaceTexture surfaceTexture, int width, int height) {
+        Log.e(TAG, "onSurfaceTextureAvailable");
         surface = new Surface(surfaceTexture);
         if (!TextUtils.isEmpty(mUrl)) {
             startPlay();
@@ -268,16 +264,25 @@ public class TextureVideoActivity extends BaseActivity implements NumberPicker.O
 
     @Override
     public void onSurfaceTextureSizeChanged(SurfaceTexture surfaceTexture, int width, int height) {
+        surface = new Surface(surfaceTexture);
+        Log.e(TAG, "onSurfaceTextureSizeChanged");
     }
 
     @Override
     public boolean onSurfaceTextureDestroyed(SurfaceTexture surfaceTexture) {
+        if (surface != null) {
+            surface.release();
+        }
+        Log.e(TAG, "onSurfaceTextureDestroyed");
         return false;
     }
 
     @Override
     public void onSurfaceTextureUpdated(SurfaceTexture surfaceTexture) {
-
+        if (surface == null) {
+            surface = new Surface(surfaceTexture);
+        }
+        Log.e(TAG, "onSurfaceTextureUpdated");
     }
 
     @Override
@@ -346,6 +351,9 @@ public class TextureVideoActivity extends BaseActivity implements NumberPicker.O
 
     @Override
     protected void selectVideoResourceForResult() {
+        if (!TextUtils.isEmpty(mUrl)) {
+            startPlay();
+        }
     }
 
     private static final int WHAT_PLAY = 104;

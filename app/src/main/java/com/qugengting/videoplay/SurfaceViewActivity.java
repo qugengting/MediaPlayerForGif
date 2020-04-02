@@ -1,9 +1,12 @@
 package com.qugengting.videoplay;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Rect;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -14,9 +17,15 @@ import android.view.View;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.util.ArrayList;
+import java.util.List;
 
 public class SurfaceViewActivity extends BaseActivity implements SeekBar.OnSeekBarChangeListener, IMDisplay {
     private static final String TAG = SurfaceViewActivity.class.getSimpleName();
@@ -38,13 +47,18 @@ public class SurfaceViewActivity extends BaseActivity implements SeekBar.OnSeekB
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_player);
-        mPlayerView = (SurfaceView) findViewById(R.id.mPlayerView);
-        seekBar = (SeekBar) findViewById(R.id.seekbar);
-        seekBarText = (TextView) findViewById(R.id.tv_duration);
+        mPlayerView = findViewById(R.id.mPlayerView);
+        seekBar = findViewById(R.id.seekbar);
+        seekBarText = findViewById(R.id.tv_duration);
         seekBar.setVisibility(View.INVISIBLE);
         seekBarText.setVisibility(View.INVISIBLE);
         seekBar.setOnSeekBarChangeListener(this);
         initPlayer();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            //6.0才用动态权限，10.0beta4已经不需要申请存储权限了，因而不会执行
+            //参考：https://blog.csdn.net/honjane/article/details/94288585
+            initPermission();
+        }
     }
 
     private void initPlayer() {
@@ -65,6 +79,7 @@ public class SurfaceViewActivity extends BaseActivity implements SeekBar.OnSeekB
     protected void onPause() {
         super.onPause();
         player.onPause();
+        isStarting = false;
     }
 
     @Override
@@ -80,7 +95,7 @@ public class SurfaceViewActivity extends BaseActivity implements SeekBar.OnSeekB
     @Override
     protected void selectVideoResourceForResult() {
         try {
-            player.setSource(mUrl);
+            player.setSource(mFileDescriptor);
             player.play();
         } catch (MPlayerException e) {
             e.printStackTrace();
@@ -119,12 +134,17 @@ public class SurfaceViewActivity extends BaseActivity implements SeekBar.OnSeekB
                 Intent intent1 = new Intent(this, TextureVideoActivity.class);
                 startActivity(intent1);
                 break;
+            case R.id.gotoTestActivity:
+                Intent intent2 = new Intent(this, TestActivity.class);
+                startActivity(intent2);
+                break;
         }
     }
 
     @Override
     public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
         this.progress = progress;
+        Log.e(TAG, "拖动到进度：" + progress);
         String sProgress = convert(progress);
         seekBarText.setText(sProgress + " / " + sDuration);
     }
@@ -138,7 +158,7 @@ public class SurfaceViewActivity extends BaseActivity implements SeekBar.OnSeekB
     @Override
     public void onStopTrackingTouch(SeekBar seekBar) {
         Log.e(TAG, "结束拖动");
-        player.seekToPosition(progress * 1000);
+        player.seekToPosition(seekBar.getProgress() * 1000);
         if (!player.isPlaying()) {
             try {
                 isStarting = true;
@@ -364,5 +384,83 @@ public class SurfaceViewActivity extends BaseActivity implements SeekBar.OnSeekB
         }
         sTime = sHour + ":" + sMunite + ":" + sSecond;
         return sTime;
+    }
+
+
+
+
+    /**
+     * 声明一个数组permissions，将需要的权限都放在里面
+     */
+    String[] permissions = new String[]{
+            Manifest.permission.WRITE_EXTERNAL_STORAGE,
+            Manifest.permission.READ_EXTERNAL_STORAGE};
+    /**
+     * 创建一个mPermissionList，逐个判断哪些权限未授予，未授予的权限存储到mPerrrmissionList中
+     */
+    List<String> mPermissionList = new ArrayList<>();
+    /**
+     * 权限请求码
+     */
+    private final int mRequestCode = 100;
+
+    /**
+     * 权限判断和申请
+     */
+    private void initPermission() {
+
+        mPermissionList.clear();//清空没有通过的权限
+
+        //逐个判断你要的权限是否已经通过
+        for (int i = 0; i < permissions.length; i++) {
+            if (ContextCompat.checkSelfPermission(SurfaceViewActivity.this, permissions[i]) != PackageManager.PERMISSION_GRANTED) {
+                mPermissionList.add(permissions[i]);//添加还未授予的权限
+            }
+        }
+        //申请权限
+        if (mPermissionList.size() > 0) {
+            //有权限没有通过，需要申请
+            showPermissionDialog();
+        } else {
+
+        }
+    }
+
+    /**
+     * @param requestCode  是我们自己定义的权限请求码
+     * @param permissions  是我们请求的权限名称数组
+     * @param grantResults 是我们在弹出页面后是否允许权限的标识数组，数组的长度对应的是权限名称数组的长度，数组的数据0表示允许权限，-1表示我们点击了禁止权限
+     */
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
+                                           @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        boolean hasPermissionDismiss = false;//有权限没有通过
+        if (mRequestCode == requestCode) {
+            for (int i = 0; i < grantResults.length; i++) {
+                if ("android.permission.WRITE_EXTERNAL_STORAGE".equals(permissions[i]) && 0 == grantResults[i]) {
+                    break;
+                }
+            }
+            for (int i = 0; i < grantResults.length; i++) {
+                if (grantResults[i] == -1) {
+                    hasPermissionDismiss = true;
+                    break;
+                }
+            }
+            //如果有权限没有被允许
+            if (hasPermissionDismiss) {
+                finish();
+            } else {
+            }
+        }
+    }
+
+    /**
+     * 权限申请弹框
+     */
+    private void showPermissionDialog() {
+        //调用运行时权限申请框架
+        ActivityCompat.requestPermissions(SurfaceViewActivity.this, permissions, mRequestCode);
     }
 }

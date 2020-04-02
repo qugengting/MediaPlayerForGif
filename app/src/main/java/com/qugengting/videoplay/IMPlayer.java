@@ -1,14 +1,16 @@
 package com.qugengting.videoplay;
 
+import java.io.FileDescriptor;
+
 public interface IMPlayer {
 
     /**
      * 设置资源
      *
-     * @param url 资源路径
+     * @param fileDescriptor 文件描述符
      * @throws MPlayerException
      */
-    void setSource(String url) throws MPlayerException;
+    void setSource(FileDescriptor fileDescriptor) throws MPlayerException;
 
     /**
      * 设置显示视频的载体

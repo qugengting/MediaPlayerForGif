@@ -5,6 +5,7 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.CAMERA" />
 
     <application
         android:allowBackup="true"
@@ -21,6 +22,8 @@
         </activity>
         <activity android:name="com.qugengting.videoplay.VideoViewActivity" />
         <activity android:name="com.qugengting.videoplay.TextureVideoActivity" />
+        <activity android:name=".TestActivity" />
+
     </application>
 
 </manifest>
